@@ -1,0 +1,134 @@
+    "use client";
+    import { useEffect, useState } from "react";
+
+    export default function StudentDashboard({ user }) {
+        const [teachers, setTeachers] = useState([]);
+        const [appointments, setAppointments] = useState([]);
+        const [teacherId, setTeacherId] = useState("");
+        const [date, setDate] = useState("");
+        const [purpose, setPurpose] = useState("");
+        const [loading, setLoading] = useState(false);
+
+        useEffect(() => {
+            async function fetchTeachers() {
+                const res = await fetch("/api/users?role=teacher");
+                const data = await res.json();
+                setTeachers(data.users || []);
+            }
+            fetchTeachers();
+        }, []);
+
+        const fetchAppointments = async () => {
+            const res = await fetch("/api/appointments", { credentials: "include" });
+            const data = await res.json();
+            setAppointments(data.appointments || []);
+        };
+
+        useEffect(() => {
+            fetchAppointments();
+        }, []);
+
+        const handleBook = async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            const res = await fetch("/api/appointments", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ teacherId, date, purpose }),
+            });
+            const data = await res.json();
+            setLoading(false);
+            if (res.ok) {
+                setTeacherId("");
+                setDate("");
+                setPurpose("");
+                fetchAppointments();
+            } else {
+                alert(data.message);
+            }
+        };
+
+        return (
+            <div>
+                <h2 className="text-xl font-semibold mb-4 text-center">Book an Appointment</h2>
+                <form
+                    onSubmit={handleBook}
+                    className="bg-white p-4 rounded-lg shadow mb-6 flex flex-col gap-3 max-w-5xl mx-auto"
+                >
+                    <select
+                        value={teacherId}
+                        onChange={(e) => setTeacherId(e.target.value)}
+                        className="border rounded px-3 py-2"
+                        required
+                    >
+                        <option value="">Select Teacher</option>
+                        {teachers.map((t) => (
+                            <option key={t._id} value={t._id}>
+                                {t.name} ({t.email})
+                            </option>
+                        ))}
+                    </select>
+
+                    <input
+                        type="datetime-local"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        className="border rounded px-3 py-2"
+                        required
+                    />
+
+                    <input
+                        type="text"
+                        value={purpose}
+                        onChange={(e) => setPurpose(e.target.value)}
+                        placeholder="Purpose of appointment"
+                        className="border rounded px-3 py-2"
+                        required
+                    />
+                    {user.role === "student" && 
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                        {loading ? "Booking..." : "Book Appointment"}
+                    </button>
+                    }
+                </form>
+
+                <h2 className="text-xl font-semibold mb-3 text-center">My Appointments</h2>
+                <div className="bg-white p-4 rounded-lg shadow">
+                    {appointments.length === 0 ? (
+                        <p>No appointments yet.</p>
+                    ) : (
+                        <ul className="space-y-2">
+                            {appointments.map((appt) => (
+                                <li
+                                    key={appt._id}
+                                    className="border rounded p-2 flex justify-between items-center"
+                                >
+                                    <div>
+                                        <p className="font-medium">{appt?.teacher?.name}</p>
+                                        {appt?.teacher === null && <p className="text-gray-500">Deleted User</p>}
+                                        <p className="text-sm text-gray-600">{new Date(appt.date).toLocaleString()}</p>
+                                        <p className="text-sm">{appt.purpose}</p>
+                                    </div>
+                                    <span
+                                        className={`text-sm px-2 py-1 rounded ${appt.status === "approved"
+                                                ? "bg-green-100 text-green-700"
+                                                : appt.status === "cancelled"
+                                                    ? "bg-red-100 text-red-700"
+                                                    : "bg-yellow-100 text-yellow-700"
+                                            }`}
+                                    >
+                                        {appt.status}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+        );
+    }

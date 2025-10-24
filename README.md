@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧑‍🎓 Student–Teacher Booking Appointment System
 
-## Getting Started
+A full-stack web application built with **Next.js**, **MongoDB**, and **JWT Authentication**, allowing students to book appointments with teachers, while admins manage users and approvals.
 
-First, run the development server:
+---
 
+## 🚀 Live Demo
+🔗 [View Deployed App on Vercel](https://your-app-name.vercel.app)
+
+---
+
+## ✨ Features
+
+### 👨‍🎓 For Students:
+- Register and log in securely.
+- View list of approved teachers.
+- Book appointments with teachers.
+- View booking history.
+
+### 👨‍🏫 For Teachers:
+- Register with department and subject details.
+- View bookings made by students.
+- Manage appointment availability.
+
+### 🛠️ For Admin:
+- Approve or reject new student/teacher accounts.
+- View all users (students, teachers).
+- Delete or manage teacher and student accounts.
+
+### 🔐 Authentication:
+- Secure login using **JWT tokens** stored in cookies.
+- Passwords hashed using **bcrypt**.
+- Middleware protection for private routes.
+
+---
+
+## 💻 Tech Stack
+
+| Category | Technology |
+|-----------|-------------|
+| Frontend | Next.js 14, React, Tailwind CSS |
+| Backend | Next.js API Routes |
+| Database | MongoDB with Mongoose |
+| Authentication | JSON Web Token (JWT) |
+| Deployment | Vercel |
+| Other | dotenv, bcrypt, cookie-based sessions |
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone this Repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/student-teacher-booking.git
+cd student-teacher-booking
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Create `.env.local` file in root and add:
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧑‍💻 Run Locally
+```bash
+npm run dev
+```
+Then visit 👉 [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛜 Deployment (on Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push your code to **GitHub**.
+2. Go to [Vercel.com](https://vercel.com/).
+3. Click **“New Project” → “Import Git Repository”**.
+4. Connect your repo.
+5. Add the same environment variables as above in **Vercel → Settings → Environment Variables**.
+6. Click **Deploy** 🚀
 
-## Deploy on Vercel
+Once deployed, update the live link at the top of this README.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🖼️ Screenshots
+You can add screenshots here, for example:
+
+- **Login Page**
+![login image](./public/screenshots/login.png)
+
+- **Register Page**
+![sign up page](./public/screenshots/register.png)
+
+- **Admin Dashboard**
+![admin dashboard](./public/screenshots/admin1.png)
+![admin dashboard](./public/screenshots/admin2.png)
+
+- **Teacher Dashboard**
+![teacher dashboard](./public/screenshots/teacher.png)
+
+- **Student Booking Page**
+![student page](./public/screenshots/student1.png)
+
+---
+
+## 📜 License
+This project is licensed under the **MIT License** — free for personal and commercial use.
+
+---
+
+## 👨‍💻 Author
+**Developed by:** Mahesh Chaudhary  
+**GitHub:** [@maheshchaudhary845](https://github.com/maheshchaudhary845)  
+**Deployed on:** [Vercel](https://vercel.com)
