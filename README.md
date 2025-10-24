@@ -89,7 +89,6 @@ Then visit 👉 [http://localhost:3000](http://localhost:3000)
 ---
 
 ## 🖼️ Screenshots
-You can add screenshots here, for example:
 
 - **Login Page**
 ![login image](./public/screenshots/login.png)
