@@ -86,8 +86,6 @@ Then visit 👉 [http://localhost:3000](http://localhost:3000)
 5. Add the same environment variables as above in **Vercel → Settings → Environment Variables**.
 6. Click **Deploy** 🚀
 
-Once deployed, update the live link at the top of this README.
-
 ---
 
 ## 🖼️ Screenshots
