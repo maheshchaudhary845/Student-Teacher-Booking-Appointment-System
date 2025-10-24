@@ -5,7 +5,7 @@ A full-stack web application built with **Next.js**, **MongoDB**, and **JWT Auth
 ---
 
 ## 🚀 Live Demo
-🔗 [View Deployed App on Vercel](https://your-app-name.vercel.app)
+🔗 [View Deployed App on Vercel](https://student-teacher-app-bice.vercel.app/)
 
 ---
 
