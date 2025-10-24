@@ -16,6 +16,9 @@ export default function RegisterPage() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        if(password.length < 8){
+            return setError("Password length should be greater than or equal to 8")
+        }
         setError("");
         setSuccess("");
         setLoading(true);
