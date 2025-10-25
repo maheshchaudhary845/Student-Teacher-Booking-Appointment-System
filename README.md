@@ -51,7 +51,7 @@ A full-stack web application built with **Next.js**, **MongoDB**, and **JWT Auth
 
 ### 1. Clone this Repository:
 ```bash
-git clone https://github.com/yourusername/student-teacher-booking.git
+git clone https://github.com/maheshchaudhary845/student-teacher-booking.git
 cd student-teacher-booking
 ```
 
