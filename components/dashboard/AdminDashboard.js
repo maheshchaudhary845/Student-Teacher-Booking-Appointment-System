@@ -88,7 +88,12 @@ export default function AdminDashboard() {
     setEditingId(user._id);
   };
 
-  if (loading) return <p className="p-6 text-center">Loading...</p>;
+  if (loading) return <div className='fixed inset-0 flex space-x-2 justify-center items-center'>
+        <span className='sr-only'>Loading...</span>
+        <div className='h-8 w-8 bg-[#A5D7E8] rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+        <div className='h-8 w-8 bg-[#548fa2] rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+        <div className='h-8 w-8 bg-[#115b74] rounded-full animate-bounce'></div>
+    </div>
 
   // Dashboard
   const teachersCount = users.filter(u => u.role === "teacher").length;
@@ -100,87 +105,84 @@ export default function AdminDashboard() {
 
       <h1 className="text-3xl font-bold mb-4">🛠 Admin Dashboard</h1>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-blue-100 p-6 rounded-lg shadow text-center">
+        <div className="bg-blue-100 hover:bg-blue-200 p-6 rounded-lg shadow text-center">
           <h3 className="text-lg font-semibold mb-2">Teachers</h3>
           <p className="text-3xl font-bold">{teachersCount}</p>
         </div>
-        <div className="bg-green-100 p-6 rounded-lg shadow text-center">
+        <div className="bg-green-100 hover:bg-green-200 p-6 rounded-lg shadow text-center">
           <h3 className="text-lg font-semibold mb-2">Students</h3>
           <p className="text-3xl font-bold">{studentsCount}</p>
         </div>
-        <div className="bg-yellow-100 p-6 rounded-lg shadow text-center">
+        <div className="bg-yellow-100 hover:bg-yellow-200 p-6 rounded-lg shadow text-center">
           <h3 className="text-lg font-semibold mb-2">Pending Approvals</h3>
           <p className="text-3xl font-bold">{pendingStudents}</p>
         </div>
       </div>
 
-      {/* Add/Edit Teacher Form */}
-      <div className="bg-white rounded-lg shadow p-6 space-y-4">
-        <h2 className="text-xl font-semibold">{editingId ? "✏️ Edit Teacher" : "➕ Add Teacher"}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="border rounded px-3 py-2 w-full"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="border rounded px-3 py-2 w-full"
-          />
-          {!editingId && (
+        <div className="bg-sky-500/5 backdrop-blur-sm rounded-lg shadow-lg p-6 space-y-4">
+          <h2 className="text-xl font-semibold">{editingId ? "✏️ Edit Teacher" : "➕ Add Teacher"}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              type="text"
+              placeholder="Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="border rounded px-3 py-2 w-full"
             />
-          )}
-          <input
-            type="text"
-            placeholder="Department"
-            value={form.department}
-            onChange={(e) => setForm({ ...form, department: e.target.value })}
-            className="border rounded px-3 py-2 w-full"
-          />
-          <input
-            type="text"
-            placeholder="Subject"
-            value={form.subject}
-            onChange={(e) => setForm({ ...form, subject: e.target.value })}
-            className="border rounded px-3 py-2 w-full"
-          />
-        </div>
-        <div className="flex space-x-2">
-          <button
-            onClick={handleSaveTeacher}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            {editingId ? "Update Teacher" : "Add Teacher"}
-          </button>
-          {editingId && (
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+            />
+            {!editingId && (
+              <input
+                type="password"
+                placeholder="Password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                className="border rounded px-3 py-2 w-full"
+              />
+            )}
+            <input
+              type="text"
+              placeholder="Department"
+              value={form.department}
+              onChange={(e) => setForm({ ...form, department: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="Subject"
+              value={form.subject}
+              onChange={(e) => setForm({ ...form, subject: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+            />
+          </div>
+          <div className="flex space-x-2">
             <button
-              onClick={() => {
-                setEditingId(null);
-                setForm({ name: "", email: "", password: "", department: "", subject: "" });
-              }}
-              className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 transition"
+              onClick={handleSaveTeacher}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
             >
-              Cancel
+              {editingId ? "Update Teacher" : "Add Teacher"}
             </button>
-          )}
+            {editingId && (
+              <button
+                onClick={() => {
+                  setEditingId(null);
+                  setForm({ name: "", email: "", password: "", department: "", subject: "" });
+                }}
+                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 transition"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-lg shadow p-6 overflow-x-auto">
+      <div className="bg-sky-500/5 rounded-lg shadow p-6 overflow-x-auto">
         <h2 className="text-xl font-semibold mb-4">📋 Users</h2>
         <table className="w-full text-left border-collapse">
           <thead>
@@ -194,7 +196,7 @@ export default function AdminDashboard() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id} className="border-b hover:bg-gray-50">
+              <tr key={user._id} className="border-b border-gray-400 hover:bg-gray-50">
                 <td className="p-2">{user.name}</td>
                 <td className="p-2">{user.email}</td>
                 <td className="p-2 capitalize">{user.role}</td>

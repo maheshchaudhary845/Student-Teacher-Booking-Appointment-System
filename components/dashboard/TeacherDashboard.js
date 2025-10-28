@@ -5,6 +5,8 @@ export default function TeacherDashboard({ user }) {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [loadingAccept, setLoadingAccept] = useState(false);
+  const [loadingCancel, setLoadingCancel] = useState(false);
 
   // Fetch teacher appointments
   const fetchAppointments = async () => {
@@ -29,6 +31,12 @@ export default function TeacherDashboard({ user }) {
   // Update appointment status
   const updateStatus = async (id, status) => {
     setUpdating(true);
+    if(status === "approved"){
+      setLoadingAccept(true)
+    }
+    else if(status === "cancelled"){
+      setLoadingCancel(true)
+    }
     try {
       const res = await fetch(`/api/appointments/${id}`, {
         method: "PATCH",
@@ -48,10 +56,17 @@ export default function TeacherDashboard({ user }) {
       console.error("Failed to update status:", err);
     } finally {
       setUpdating(false);
+      setLoadingAccept(false)
+      setLoadingCancel(false)
     }
   };
 
-  if (loading) return <p className="p-6">Loading appointments...</p>;
+  if (loading) return <div className='fixed inset-0 flex space-x-2 justify-center items-center'>
+        <span className='sr-only'>Loading...</span>
+        <div className='h-8 w-8 bg-[#A5D7E8] rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+        <div className='h-8 w-8 bg-[#548fa2] rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+        <div className='h-8 w-8 bg-[#115b74] rounded-full animate-bounce'></div>
+    </div>
 
   return (
     <div className="p-6">
@@ -64,7 +79,7 @@ export default function TeacherDashboard({ user }) {
           {appointments.map((appt) => (
             <li
               key={appt._id}
-              className="border rounded-lg p-4 flex justify-between items-center bg-white shadow"
+              className="border rounded-lg p-4 flex justify-between items-center bg-white/20 backdrop-blur-[5px] hover:bg-sky-100 shadow-lg"
             >
               <div>
                 <p className="font-semibold text-lg">
@@ -84,14 +99,14 @@ export default function TeacherDashboard({ user }) {
                       disabled={updating}
                       className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm"
                     >
-                      Approve
+                      {loadingAccept ? "Accepting..." : "Accept"}
                     </button>
                     <button
                       onClick={() => updateStatus(appt._id, "cancelled")}
                       disabled={updating}
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
                     >
-                      Cancel
+                      {loadingCancel ? "Cancelling..." : "Cancel"}
                     </button>
                   </>
                 ) : (

@@ -29,8 +29,8 @@ export default async function DashboardPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-100 p-6">
-                <h1 className="text-3xl font-bold mb-6">Welcome, {user.name}</h1>
+            <div className="min-h-screen p-6">
+                <h1 className="md:text-3xl text-xl text-[#45474B] font-bold mb-6">Welcome, <span className="text-[#3F72AF]">{user.name}</span></h1>
 
                 {user.role === "student" && <StudentDashboard user={user} />}
                 {user.role === "teacher" && <TeacherDashboard user={user} />}
